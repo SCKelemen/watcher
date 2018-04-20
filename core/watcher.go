@@ -6,7 +6,7 @@ func NewWatcher() Watcher {
 
 type Watcher struct {
 	watchers   []IWatcher
-	isWatching bool
+	IsWatching bool
 }
 
 func (w Watcher) AddWatcher(watcher IWatcher) bool {
@@ -17,11 +17,17 @@ func (w Watcher) AddWatcher(watcher IWatcher) bool {
 // Watch starts the watcher, and
 // returns the state of the watcher
 func (w Watcher) Watch() bool {
-	w.isWatching = true
-	return w.isWatching
+	w.IsWatching = true
+	for _, watcher := range w.watchers {
+		watcher.Watch()
+	}
+	return w.IsWatching
 }
 
 func (w Watcher) Stop() bool {
-	w.isWatching = false
-	return w.isWatching
+	w.IsWatching = false
+	for _, watcher := range w.watchers {
+		watcher.Stop()
+	}
+	return w.IsWatching
 }

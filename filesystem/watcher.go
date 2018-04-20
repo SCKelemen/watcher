@@ -10,6 +10,21 @@ func NewWatcher() core.IWatcher {
 
 type FileSystemWatcher struct {
 	WatchedPaths []string
+	isWatching   bool
+}
+
+func (fsw FileSystemWatcher) Watch() bool {
+	fsw.isWatching = true
+	return fsw.isWatching
+}
+
+func (fsw FileSystemWatcher) Stop() bool {
+	fsw.isWatching = false
+	return fsw.isWatching
+}
+
+func (fsw FileSystemWatcher) IsWatching() bool {
+	return fsw.isWatching
 }
 
 func (fsw FileSystemWatcher) WatcherType() core.WatcherType {
